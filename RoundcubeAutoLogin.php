@@ -70,7 +70,8 @@ class RoundcubeAutoLogin
             if($response_info['http_code'] == 302)
             {
                 // find all relevant cookies to set (php session + rc auth cookie)
-                preg_match_all('/Set-Cookie: (.*)\b/', $response, $cookies);
+				
+                preg_match_all('/[Ss]et-[Cc]ookie: (.*)\b/', $response, $cookies);
 
                 $cookie_return = array();
 
@@ -132,15 +133,12 @@ class RoundcubeAutoLogin
 
 /*
  include this HTML form in you page and point it to your script location
-
 <form action="http://domain.com/roundcube/RoundcubeAutoLogin.php" method="post" name="autologin">
   UserID <input name="rc_user" type="text" id="rc_user">
   Passwort <input name="rc_pass" type="password" id="rc_pass">
   <input type="submit" name="Submit" value="login">
 </form>
-
 */
-
 // send parameters with post, its more secure because username and password not shown in browser and logfile
 $rcuser=$_REQUEST['rc_user'];
 $rcpass=$_REQUEST['rc_pass'];
@@ -160,5 +158,4 @@ if (!empty($cookies))
     // and redirect to roundcube with the set cookies
     $rc->redirect();
 }
-
 ?>
